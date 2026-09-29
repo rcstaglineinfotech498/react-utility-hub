@@ -29,7 +29,7 @@ export default function AgeCalculator() {
       next: Math.ceil((next - now) / 86400000),
     };
   }, [birth, today]);
-  
+
   return (
     <ToolFrame
       eyebrow="Dates & milestones"
@@ -55,17 +55,29 @@ export default function AgeCalculator() {
         )}
         {result ? (
           <div className="mt-[25px] grid grid-cols-1 gap-3 sm:grid-cols-3">
-            <div className="rounded-[10px] bg-[#f4f7f2] p-[18px]">
-              <strong className="block font-mono text-[25px] font-bold text-green-dark">{result.years}</strong>
-              <span className="mt-1.5 block text-[11px] text-muted">years old</span>
+            <div className="rounded-[10px] p-[18px]">
+              <strong className="block font-mono text-[25px] font-bold text-green-dark">
+                {result.years}
+              </strong>
+              <span className="mt-1.5 block text-[11px] text-muted">
+                years old
+              </span>
             </div>
-            <div className="rounded-[10px] bg-[#f4f7f2] p-[18px]">
-              <strong className="block font-mono text-[25px] font-bold text-green-dark">{result.days.toLocaleString()}</strong>
-              <span className="mt-1.5 block text-[11px] text-muted">total days</span>
+            <div className="rounded-[10px] p-[18px]">
+              <strong className="block font-mono text-[25px] font-bold text-green-dark">
+                {result.days.toLocaleString()}
+              </strong>
+              <span className="mt-1.5 block text-[11px] text-muted">
+                total days
+              </span>
             </div>
-            <div className="rounded-[10px] bg-[#f4f7f2] p-[18px]">
-              <strong className="block font-mono text-[25px] font-bold text-green-dark">{result.next}</strong>
-              <span className="mt-1.5 block text-[11px] text-muted">days until birthday</span>
+            <div className="rounded-[10px] p-[18px]">
+              <strong className="block font-mono text-[25px] font-bold text-green-dark">
+                {result.next}
+              </strong>
+              <span className="mt-1.5 block text-[11px] text-muted">
+                days until birthday
+              </span>
             </div>
           </div>
         ) : (
@@ -77,4 +89,3 @@ export default function AgeCalculator() {
     </ToolFrame>
   );
 }
-
