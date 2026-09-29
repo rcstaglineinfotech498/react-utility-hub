@@ -1,4 +1,9 @@
 {
+  "private": true,
+  "scripts": {
+    "build": "npm --prefix utility-tool run build",
+    "deploy": "npm run build && gh-pages -d utility-tool/dist"
+  },
   "dependencies": {
     "@reduxjs/toolkit": "^2.12.0",
     "axios": "^1.20.0",

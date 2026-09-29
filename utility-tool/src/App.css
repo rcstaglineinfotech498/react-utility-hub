@@ -13,6 +13,7 @@
 }
 
 :root {
+  --page-background: #f6f7f4;
   --ink: #1d2421;
   --muted: #75807a;
   --line: #e4e8e3;
@@ -22,6 +23,7 @@
   --mint: #dceee6;
 }
 [data-theme="dark"] {
+  --page-background: #121815;
   --ink: #eef3ef;
   --muted: #9aa8a1;
   --line: #2e3a34;
@@ -29,11 +31,18 @@
   --green: #79c5aa;
   --green-dark: #9ce4c7;
   --mint: #223f35;
+  color-scheme: dark;
 }
 
 @layer base {
+  html,
+  body,
+  #root {
+    min-height: 100%;
+    background: var(--page-background);
+  }
   body {
-    @apply m-0 min-w-[320px] bg-[#f6f7f4] text-ink;
+    @apply m-0 min-w-[320px] text-ink;
   }
   [data-theme="dark"] body {
     @apply bg-[#121815];
@@ -56,7 +65,7 @@
     @apply fixed z-10 flex min-h-screen w-[246px] flex-col border-r-2 border-line bg-surface px-[14px] pb-[18px] pt-7;
   }
   .brand {
-    @apply flex items-center gap-2.5 px-[15px] pb-[35px] text-[19px] font-semibold text-ink;
+    @apply flex items-center justify-between gap-2.5 px-[15px] pb-[35px] text-[19px] font-semibold text-ink;
   }
   .brand-mark {
     @apply grid size-8 place-items-center rounded-[10px] bg-green text-white;
@@ -119,8 +128,7 @@
   .top-actions {
     @apply gap-[13px];
   }
-  .icon-button,
-  .mobile-menu {
+  .icon-button {
     @apply grid size-[34px] place-items-center rounded-full border-0 bg-transparent text-muted;
   }
   .icon-button:hover {
@@ -136,7 +144,7 @@
     @apply grid size-8 place-items-center rounded-full bg-[#e5d9cc] text-[10px] font-bold text-[#7e6352];
   }
   .page-content {
-    @apply  px-[clamp(22px,5vw,72px)] pb-[70px] h-[100vh] pt-12 ;
+    @apply min-h-[calc(100vh-76px)] px-[clamp(22px,5vw,72px)] pb-[70px] pt-12;
   }
   .page-header,
   .welcome,
@@ -678,14 +686,8 @@
   }
 }
 
-[data-theme="dark"],
-[data-theme="dark"] * {
+[data-theme="dark"]{
   color: #ffffff !important;
-}
-
-[data-theme="dark"] svg {
-  color: #ffffff !important;
-  stroke: currentColor;
 }
 
 [data-theme="dark"] input::placeholder,

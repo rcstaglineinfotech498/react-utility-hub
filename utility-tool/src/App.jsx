@@ -140,7 +140,7 @@ function Layout({ children }) {
 function App() {
     return (
         <Provider store={store}>
-            <BrowserRouter>
+            <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, "")}>
                 <Layout>
                     <Routes>
                         <Route path="/" element={<Dashboard />} />

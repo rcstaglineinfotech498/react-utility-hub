@@ -65,7 +65,7 @@ export default function Weather() {
           </EmptyState>
         )}
         {data && (
-          <div className="mt-7 rounded-xl bg-[#F5F5F0] p-6">
+          <div className="mt-7 rounded-xl p-6">
             <div className="flex items-center gap-[18px] text-green-dark">
               <CloudSun size={48} />
               <div className="grid gap-0.5">
