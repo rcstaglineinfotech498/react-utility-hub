@@ -53,8 +53,8 @@ export default function MovieDetails() {
           setErrorMessage(error.message || "We couldn't load this movie.");
           setStatus("error");
         }
+        // console.log(status)
       });
-
     return () => {
       active = false;
     };
