@@ -94,7 +94,7 @@ export default function UrlParser() {
               </div>
             ))}
             <Button
-              className="mt-4 bg-blue-50"
+              className="mt-4 bg-amber-50"
               variant="secondary"
               onClick={copy}
             >

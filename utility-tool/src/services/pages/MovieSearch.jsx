@@ -1,13 +1,12 @@
 import { useState } from "react";
 import {
-  CalendarDays,
   ChevronLeft,
   ChevronRight,
   Film,
   Search,
   Star,
-  X,
 } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import { ToolFrame } from "../../components/ToolFrame";
 import {
   Button,
@@ -22,12 +21,13 @@ import { apiConfig, movieApi } from "../../services/api";
 const PAGE_SIZE = 10;
 
 export default function MovieSearch() {
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
-  const [page, setPage] = useState(1);
-  const [totalResults, setTotalResults] = useState(0);
-  const [status, setStatus] = useState("idle");
+  const location = useLocation();
+  const savedSearch = location.state?.search;
+  const [query, setQuery] = useState(savedSearch?.query || "");
+  const [results, setResults] = useState(savedSearch?.results || []);
+  const [page, setPage] = useState(savedSearch?.page || 1);
+  const [totalResults, setTotalResults] = useState(savedSearch?.totalResults || 0);
+  const [status, setStatus] = useState(savedSearch?.status || "idle");
   const [errorMessage, setErrorMessage] = useState("");
 
   const searchMovies = async (searchTerm, requestedPage = 1) => {
@@ -37,7 +37,6 @@ export default function MovieSearch() {
       return;
     }
 
-    setSelectedMovie(null);
     setResults([]);
     setPage(requestedPage);
     setStatus("loading");
@@ -100,7 +99,6 @@ export default function MovieSearch() {
     const searchTerm = query.trim();
     if (!searchTerm) {
       setResults([]);
-      setSelectedMovie(null);
       setTotalResults(0);
       setStatus("empty-query");
       return;
@@ -153,94 +151,19 @@ export default function MovieSearch() {
             Try a different title or a broader search.
           </EmptyState>
         )}
-        {selectedMovie && (
-          <section
-            className="mt-6 rounded-lg border border-line bg-surface p-4 sm:p-5"
-            aria-label="Movie details"
-          >
-            <div className="mb-4 flex items-center justify-between gap-3">
-              <h2 className="text-base font-semibold">Movie details</h2>
-              <Button
-                type="button"
-                variant="secondary"
-                className="min-h-9! px-2.5!  bg-amber-50 text-black"
-                aria-label="Close movie details"
-                onClick={() => setSelectedMovie(null)}
-              >
-                <X size={17} />
-              </Button>
-            </div>
-            <div className="grid gap-5 sm:grid-cols-[180px_1fr]">
-              {selectedMovie.Poster && selectedMovie.Poster !== "N/A" ? (
-                <img
-                  className="aspect-2/3 w-full rounded-md bg-[#efede8] object-contain sm:max-w-[180px]"
-                  src={selectedMovie.Poster}
-                  alt={`${selectedMovie.Title} poster`}
-                />
-              ) : (
-                <div className="grid aspect-2/3 w-full place-items-center rounded-md bg-[#efede8] text-[#1d2421] sm:max-w-[180px]">
-                  <Film size={32} />
-                </div>
-              )}
-              <div>
-                <h3 className="text-2xl font-semibold">
-                  {selectedMovie.Title}
-                </h3>
-                <div className="mt-2 flex flex-wrap gap-x-4 gap-y-2 text-m text-muted">
-                  <span className="inline-flex items-center gap-1">
-                    <CalendarDays size={14} />{" "}
-                    {selectedMovie.Year || "Year unknown"}
-                  </span>
-                  <span className="inline-flex items-center gap-1">
-                    <Star size={14} />{" "}
-                    {selectedMovie.imdbRating &&
-                    selectedMovie.imdbRating !== "N/A"
-                      ? `${selectedMovie.imdbRating}/10 IMDb`
-                      : "Rating unavailable"}
-                  </span>
-                  {selectedMovie.Runtime && selectedMovie.Runtime !== "N/A" && (
-                    <span>{selectedMovie.Runtime}</span>
-                  )}
-                  {selectedMovie.Rated && selectedMovie.Rated !== "N/A" && (
-                    <span>{selectedMovie.Rated}</span>
-                  )}
-                </div>
-                <p className="mt-4 text-m leading-6">
-                  {selectedMovie.Plot && selectedMovie.Plot !== "N/A"
-                    ? selectedMovie.Plot
-                    : "No description is available for this movie."}
-                </p>
-                <dl className="mt-4 grid gap-2 text-m sm:grid-cols-2">
-                  {[
-                    ["Genre", selectedMovie.Genre],
-                    ["Director", selectedMovie.Director],
-                    ["Cast", selectedMovie.Actors],
-                    ["Released", selectedMovie.Released],
-                    ["Awards", selectedMovie.Awards],
-                  ]
-                    .filter(([, value]) => value && value !== "N/A")
-                    .map(([label, value]) => (
-                      <div key={label}>
-                        <dt className="font-semibold">{label}</dt>
-                        <dd className="mt-0.5 text-muted">{value}</dd>
-                      </div>
-                    ))}
-                </dl>
-              </div>
-            </div>
-          </section>
-        )}
         {results.length > 0 && (
           <>
             <div className="mt-[27px] grid grid-cols-1 gap-3 sm:grid-cols-4 sm:gap-[18px]">
               {results.map((movie) => (
-                <button
-                  className="overflow-hidden rounded-lg border border-line bg-surface text-left transition hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                <Link
+                  className="block overflow-hidden rounded-lg border border-line bg-surface text-left transition hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
                   key={movie.imdbID}
-                  type="button"
-                  aria-label={`Show details for ${movie.Title}`}
-                  aria-pressed={selectedMovie?.imdbID === movie.imdbID}
-                  onClick={() => setSelectedMovie(movie)}
+                  to={`/movies/${movie.imdbID}`}
+                  state={{
+                    movie,
+                    search: { query, results, page, totalResults, status },
+                  }}
+                  aria-label={`View details for ${movie.Title}`}
                 >
                   {movie.Poster && movie.Poster !== "N/A" ? (
                     <img
@@ -271,7 +194,7 @@ export default function MovieSearch() {
                         : "Description unavailable."}
                     </span>
                   </span>
-                </button>
+                </Link>
               ))}
             </div>
             {totalPages > 1 && (

@@ -41,6 +41,7 @@ import PasswordGenerator from "./services/pages/PasswordGenerator";
 import DiceRoller from "./services/pages/DiceRoller";
 import UrlParser from "./services/pages/UrlParser";
 import MovieSearch from "./services/pages/MovieSearch";
+import MovieDetails from "./services/pages/MovieDetails";
 import Settings from "./services/pages/Settings"; 
 import "./App.css";
 
@@ -65,7 +66,10 @@ function Layout({ children }) {
     const dispatch = useDispatch();
     const { theme } = useSelector((state) => state.app);
     const location = useLocation();
-    const current = tools.find((tool) => tool.path === location.pathname) || {
+    const current = tools.find((tool) =>
+        tool.path === location.pathname ||
+        (tool.path === "/movies" && location.pathname.startsWith("/movies/"))
+    ) || {
         label: "Settings",
     };
     useEffect(() => {
@@ -155,6 +159,7 @@ function App() {
                         <Route path="/dice" element={<DiceRoller />} />
                         <Route path="/url" element={<UrlParser />} />
                         <Route path="/movies" element={<MovieSearch />} />
+                        <Route path="/movies/:imdbID" element={<MovieDetails />} />
                         <Route path="/settings" element={<Settings />} /> 
                         <Route path="*" element={<Dashboard />} />
                     </Routes>

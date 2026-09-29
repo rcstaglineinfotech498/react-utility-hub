@@ -89,7 +89,7 @@
     @apply my-0.5 flex min-h-10 items-center gap-3 rounded-[10px] px-[15px] text-[13px] text-muted no-underline transition duration-200;
   }
   .nav-item:hover {
-    @apply bg-[#f5f7f4] text-ink;
+    @apply  text-red-500 text-ink;
   }
   .nav-item.active {
     @apply bg-mint font-semibold text-green-dark;
@@ -297,9 +297,7 @@
   .btn-secondary {
     @apply border border-line bg-transparent text-ink;
   }
-  .btn-secondary:hover {
-    @apply bg-[#f4f6f2];
-  }
+
   .btn-dark {
     @apply bg-[#315b4f] px-2.5 py-2 text-[11px];
   }

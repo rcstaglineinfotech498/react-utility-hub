@@ -50,7 +50,12 @@ export default function PasswordGenerator() {
           <span className="flex-1 overflow-hidden text-ellipsis font-mono text-[15px]">
             {password || "Select options to generate"}
           </span>
-          <Button variant="secondary" onClick={copy} disabled={!password} className="bg-amber-50">
+          <Button
+            variant="secondary"
+            onClick={copy}
+            disabled={!password}
+            className="bg-amber-50"
+          >
             <Copy size={16} />
             {copied ? "Copied!" : "Copy"}
           </Button>

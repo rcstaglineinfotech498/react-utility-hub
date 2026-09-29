@@ -97,7 +97,7 @@ export default function Dashboard() {
             onClick={() => navigate(path)}
           >
             <div
-              className={`grid size-[38px] shrink-0 place-items-center rounded-[10px] ${["bg-[#f7dfca] text-[#a56f39]", "bg-[#e8e4f4] text-[#7e6d9a]", "bg-[#FFE5BF] ", "bg-[#f9edb9] text-[#bd8b35]", "bg-[#f6dcd7] text-[#bd665a]", "bg-[#B1D3B9] text-[#778873]", "bg-[#DDE5E1] text-[#5A6B63]", "bg-[#95BDD7]", "bg-[#FFE2E2]", "text-[#896C6C] bg-[#E5BEB5]", "bg-[#C0C9EE]"][index]}`}
+              className={`grid size-[38px] shrink-0 place-items-center rounded-[10px] ${["bg-[#f7dfca] text-[#a56f39]", "bg-[#e8e4f4] text-[#7e6d9a]", "bg-[#FFE5BF] text-[#000000]", "bg-[#f9edb9] text-[#bd8b35]", "bg-[#f6dcd7] text-[#bd665a]", "bg-[#B1D3B9] text-[#778873]", "bg-[#DDE5E1] text-[#5A6B63]", "bg-[#95BDD7]", "bg-[#FFE2E2] text-[#000000]", "text-[#896C6C] bg-[#E5BEB5]", "bg-[#C0C9EE]"][index]}`}
             >
               {createElement(icon, { size: 20 })}
             </div>
